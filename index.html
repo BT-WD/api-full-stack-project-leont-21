@@ -1,11 +1,29 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>API Full Stack Project</title>
-  </head>
-  <body>
-    <!-- You code goes here-->
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Fullstack Project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>PokeGuess: Gen 1</h1>
+        
+        <div class="stats">
+            <div class="timer">Time: <span id="time">00:00</span></div>
+            <div class="score">Caught: <span id="count">0</span> / 151</div>
+        </div>
+
+        <div class="controls">
+            <input type="text" id="guess-input" placeholder="Type a Pokémon name..." disabled>
+            <button id="start-btn">Start Game</button>
+        </div>
+
+        <div id="pokemon-grid" class="grid">
+            <!-- Pokemon slots will be generated here -->
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
 </html>

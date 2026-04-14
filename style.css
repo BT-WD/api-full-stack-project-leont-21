@@ -1,0 +1,97 @@
+:root {
+    --poke-red: #ff1c1c;
+    --poke-blue: #3b4cca;
+    --poke-yellow: #ffde00;
+    --bg-color: #f0f0f0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.game-container {
+    max-width: 900px;
+    width: 100%;
+    text-align: center;
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+h1 { color: var(--poke-blue); margin-bottom: 10px; }
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.controls input {
+    padding: 12px;
+    width: 250px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    outline: none;
+}
+
+.controls input:focus { border-color: var(--poke-blue); }
+
+#start-btn {
+    padding: 12px 25px;
+    background: var(--poke-red);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 30px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 1px solid #eee;
+}
+
+.poke-card {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.poke-card span { font-size: 0.8rem; color: #888; }
+
+.poke-card img {
+    width: 60px;
+    filter: brightness(0); /* Hidden state: silhouette */
+    opacity: 0.3;
+}
+
+.poke-card.found img {
+    filter: brightness(1); /* Revealed state */
+    opacity: 1;
+}
+
+.poke-card.found p {
+    font-weight: bold;
+    color: #333;
+    margin: 5px 0 0 0;
+}
