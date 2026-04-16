@@ -20,7 +20,8 @@ const countDisplay = document.getElementById('count');
  * Removes hyphens, spaces, and punctuation to make guessing easier.
  */
 function normalize(str) {
-    return str.toLowerCase().trim();
+    // normalize for comparison: lowercase and remove non-alphanumeric characters
+    return str.toLowerCase().replace(/[^a-z0-9]/g, '').trim();
 }
 
 
@@ -36,35 +37,36 @@ async function initGame() {
         }
 
         const data = await response.json();
-        const species = data.pokemon_species
+        const species = data.pokemon_species;
 
-        console.log(species)
+        console.log(species);
 
-        species.forEach(async (p) => {
-            var pokemonData = {}
+        // Fetch all pokemon details in parallel and wait for them to complete
+        const fetchPromises = species.map(async (p) => {
             try {
-                const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${p.name}/`)
+                const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${p.name}/`);
+                if (!res.ok) throw new Error(`Failed to fetch ${p.name}`);
+                const pokeStats = await res.json();
 
-                if (response.ok) {
-                    var pokeStats = await response.json()
+                console.log(pokeStats.sprites.front_default);
 
-                    console.log(pokeStats.sprites.front_default)
-
-                    pokemonData = {
-                        id: pokeStats.id,
-                        name: p.name,
-                        cleanName: normalize(p.name),
-                        sprite: pokeStats.sprites.front_default,
-                        found: false
-                    }
-                }
-                console.log(pokemonList)
-                pokemonList.push(pokemonData);
-            }
-            catch (error) {
-                console.error(`error getting pokemon ${p.name}`)
+                return {
+                    id: pokeStats.id,
+                    name: p.name,
+                    cleanName: normalize(p.name),
+                    // use a tiny transparent image as a safe fallback if sprite is null
+                    sprite: pokeStats.sprites.front_default || 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=',
+                    found: false
+                };
+            } catch (error) {
+                console.error(`error getting pokemon ${p.name}`, error);
+                return null;
             }
         });
+
+        const results = await Promise.all(fetchPromises);
+        // Filter out failed fetches and sort by Pokedex id
+        pokemonList = results.filter(Boolean).sort((a, b) => a.id - b.id);
 
         renderGrid();
         startBtn.innerText = "Start Game";
@@ -83,10 +85,10 @@ async function initGame() {
  */
 function renderGrid() {
     grid.innerHTML = pokemonList.map(p => `
-        <div class="poke-card" id="poke-${p.name}">
-            <span class="dex-num">#${p.name}</span>
-            <img src="${p.sprite}" alt="???">
-            <p class="name-display">???</p>
+        <div class="poke-card" id="poke-${p.id}">
+            <span class="dex-num">#${String(p.id).padStart(3, '0')}</span>
+            <img src="${p.sprite || 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}" alt="${p.found ? p.name : '???'}">
+            <p class="name-display">${p.found ? p.name.toUpperCase() : '???'}</p>
         </div>
     `).join('');
 }
@@ -145,7 +147,7 @@ input.addEventListener('input', (e) => {
 function revealPokemon(p) {
     const card = document.getElementById(`poke-${p.id}`);
     card.classList.add('found');
-    card.querySelector('.name-display').innerText = p.name.toUpperCase();
+    card.querySelector('.name-display').innerText = p.name.toLowerCase();
 }
 
 /**
