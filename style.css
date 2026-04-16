@@ -14,13 +14,14 @@ body {
 }
 
 .game-container {
-    max-width: 900px;
+    max-width: none;
     width: 100%;
+    margin: 0;
     text-align: center;
     background: white;
-    padding: 30px;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.06);
 }
 
 h1 { color: var(--poke-blue); margin-bottom: 10px; }
@@ -34,18 +35,18 @@ h1 { color: var(--poke-blue); margin-bottom: 10px; }
 }
 
 .controls input {
-    padding: 12px;
-    width: 250px;
+    padding: 8px;
+    width: 200px;
     border: 2px solid #ddd;
     border-radius: 5px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     outline: none;
 }
 
 .controls input:focus { border-color: var(--poke-blue); }
 
 #start-btn {
-    padding: 12px 25px;
+    padding: 10px 18px;
     background: var(--poke-red);
     color: white;
     border: none;
@@ -56,42 +57,50 @@ h1 { color: var(--poke-blue); margin-bottom: 10px; }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    gap: 6px;
     margin-top: 30px;
-    max-height: 500px;
+    max-height: 75vh;
     overflow-y: auto;
-    padding: 10px;
+    padding: 8px;
     border: 1px solid #eee;
+    width: 100%;
 }
 
 .poke-card {
     background: #f9f9f9;
-    border-radius: 8px;
-    padding: 10px;
+    border-radius: 3px;
+    padding: 3px;
     border: 1px solid #ddd;
-    min-height: 100px;
+    min-height: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
 
-.poke-card span { font-size: 0.8rem; color: #888; }
+.poke-card span { font-size: 0.65rem; color: #888; }
 
 .poke-card img {
-    width: 60px;
-    filter: brightness(0); /* Hidden state: silhouette */
-    opacity: 0.3;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: brightness(0);
+    opacity: 0.25;
 }
 
 .poke-card.found img {
-    filter: brightness(1); /* Revealed state */
+    filter: brightness(1);
     opacity: 1;
+}
+
+.poke-card p {
+    font-size: 0.7rem;
+    margin: 6px 0 0 0;
 }
 
 .poke-card.found p {
     font-weight: bold;
     color: #333;
-    margin: 5px 0 0 0;
+    margin: 4px 0 0 0;
 }
