@@ -18,12 +18,21 @@
         <div class="controls">
             <input type="text" id="guess-input" placeholder="Press Start Game!" disabled>
             <button id="start-btn">Start Game</button>
+            <button id="highscore-btn">Show Leaderboard</button>
         </div>
 
         <div id="pokemon-grid" class="grid">
             <!-- Pokemon slots will be generated here -->
         </div>
+
+        <div id="leaderboard" class="leaderboard hidden" aria-hidden="true">
+            <div class="leaderboard-panel">
+                <button id="close-leaderboard" class="close">✕</button>
+                <h2>Leaderboard</h2>
+                <ol id="leaderboard-list" class="leaderboard-list"></ol>
+            </div>
+        </div>
     </div>
-    <script src="script.js"></script>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
