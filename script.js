@@ -189,7 +189,7 @@ async function saveScore(playerInitials, playerTime) {
 async function winGame() {
     clearInterval(timerInterval);
     input.disabled = true;
-    input.placeholder = "GOTTA CATCH 'EM ALL!";
+    input.placeholder = "CONGRATS!!";
 
     const timeTaken = timerSeconds;
     const formatted = formatTime(timeTaken);
