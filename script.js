@@ -139,21 +139,19 @@ startBtn.addEventListener('click', () => {
  */
 input.addEventListener('input', (e) => {
     const userGuess = normalize(e.target.value);
-    
-    // Check if guess matches any unfound pokemon
-    const match = pokemonList.find(p => p.cleanName === userGuess && !p.found);
 
-    //TODO: HANDLE NIDORAN EXCEPTION
+    // Find all unfound matches (handles duplicate names like Nidoran male/female)
+    const matches = pokemonList.filter(p => p.cleanName === userGuess && !p.found);
 
-    if (match) {
-        // Mark as found
-        match.found = true;
-        caughtCount++;
-        
-        // Update UI
-        revealPokemon(match);
-        
-        // Reset input for next guess
+    if (matches.length > 0) {
+        // Mark each matched pokemon as found and reveal
+        matches.forEach(m => {
+            m.found = true;
+            revealPokemon(m);
+        });
+
+        // Update counts and UI
+        caughtCount += matches.length;
         e.target.value = '';
         countDisplay.innerText = caughtCount;
 
